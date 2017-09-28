@@ -1,4 +1,4 @@
-var app = angular.module('wordApp', ["ng-file-model"]);
+var app = angular.module('wordApp', ["ngRoute", "ng-file-model"]);
 
 app.controller('tabController', function() {
     this.tab = 1;
