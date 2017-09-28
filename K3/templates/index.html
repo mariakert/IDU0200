@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metsaelanike andmebaas</title>
+    <script src="../static/js/jquery-3.2.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container" ng-app="animalApp" ng-controller="tabController as tabs">
+        <div class="header">
+            <h3 class="text-muted">Metsaelanike andmebaas</h3>
+        </div>
+        <div class="navbar navbar-default">
+            <ul class="nav nav-pills navbar-nav">
+                <li ng-class="{active: tabs.isSet(1)}">
+                    <a href ng-click="tabs.setTab(1)">Otsi</a>
+                </li>
+                <li ng-class="{active: tabs.isSet(2)}">
+                    <a href ng-click="tabs.setTab(2)">Lisa loom</a>
+                </li>
+                <li ng-class="{active: tabs.isSet(3)}">
+                    <a href ng-click="tabs.setTab(3)">Registreeri loom</a>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-controller="animalController as animalCtrl">
+            <div ng-show="tabs.isSet(1)" class="col-sm-offset-1 col-sm-10">
+                <div>
+                    <form>
+                        <p>Parameeter:</p>
+                        <select ng-model="query.type" class="form-control">
+                            <option value="name">Nimi</option>
+                            <option value="species">Liik</option>
+                            <option value="location">Asukoht</option>
+                        </select>
+                        <br>
+                        <p>Otsing:</p>
+                        <input type="text" ng-model="query.query" class="form-control">
+                        <br>
+                        <button type="submit" class="form-control btn btn-primary" ng-click="search()">Otsi</button>
+                    </form>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table id="results" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nimi</th>
+                                <th>Liik</th>
+                                <th>Asukoht</th>
+                                <th>Kuupäev</th>
+                                <th>Kellaaeg</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sighting in data track by $index">
+                                <th scope="row">{{'{{$index+1}}'}}</th>
+                                <td>{{'{{sighting[1]}}'}}</td>
+                                <td>{{'{{sighting[2]}}'}}</td>
+                                <td>{{'{{sighting[5]}}'}}</td>
+                                <td>{{'{{sighting[6]}}'}}</td>
+                                <td>{{'{{sighting[7]}}'}}</td>
+                                <td><input type="button" class="btn" ng-click="editSighting(sighting); tabs.setTab(4)" value="Muuda"></td>
+                                <td><input type="button" class="btn" ng-click="deleteSighting(sighting[0], sighting[3])" value="Kustuta"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div ng-show="tabs.isSet(2)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <form>
+                        <p>Nimi:</p>
+                        <input type="text" ng-model="animal.animalName" class="form-control">
+                        <br>
+                        <p>Liik:</p>
+                        <input type="text" ng-model="animal.species" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="addAnimal()">Salvesta</button>
+                    </form>
+                </div>
+            </div>
+            <div ng-show="tabs.isSet(3)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <form>
+                        <p>Nimi:</p>
+                        <input type="text" ng-model="sighting.name" class="form-control">
+                        <br>
+                        <p>Asukoht:</p>
+                        <input type="text" ng-model="sighting.location" class="form-control">
+                        <br>
+                        <p>Kuupäev:</p>
+                        <input type="date" ng-model="sighting.sight_date" class="form-control">
+                        <br>
+                        <p>Kellaaeg:</p>
+                        <input type="time" ng-model="sighting.time" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="addSighting()">Salvesta</button>
+                    </form>
+                </div>
+            </div>
+            <div ng-show="tabs.isSet(4)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <h1>{{ '{{animal.name}}' }}</h1>
+                    <form>
+                        <p>Liik:</p>
+                        <input type="text" ng-model="animal.species" class="form-control">
+                        <br>
+                        <p>Asukoht:</p>
+                        <input type="text" ng-model="sighting.location" class="form-control">
+                        <br>
+                        <p>Kuupäev:</p>
+                        <input type="date" ng-model="sighting.sight_date" class="form-control">
+                        <br>
+                        <p>Kellaaeg:</p>
+                        <input type="time" ng-model="sighting.time" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="updateSighting(); tabs.setTab(1)">Salvesta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

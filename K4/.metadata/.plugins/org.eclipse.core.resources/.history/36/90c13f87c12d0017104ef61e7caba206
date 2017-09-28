@@ -1,0 +1,29 @@
+package tests;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
+public class Main {
+	
+	private static final int SEARCH_COUNT = 1;
+	private static final int SORT_COUNT = 1;
+	private static final int FILTER_COUNT = 1;
+	private static final int CART_COUNT = 1;
+	private static final int REDIRECT_COUNT = 3;
+	
+
+	public static Test suite() {
+		TestSuite suite = new TestSuite();
+		for (int i = 0; i < SEARCH_COUNT; i++) suite.addTestSuite(Search.class);
+		for (int i = 0; i < SORT_COUNT; i++) suite.addTestSuite(Sort.class);
+		for (int i = 0; i < FILTER_COUNT; i++) suite.addTestSuite(Filter.class);
+		for (int i = 0; i < CART_COUNT; i++) suite.addTestSuite(AddAndRemoveFromCart.class);
+		for (int i = 0; i < REDIRECT_COUNT; i++) suite.addTestSuite(Redirect.class);
+		return suite;
+	}
+
+	public static void main(String[] args) {
+		TestRunner.run(suite());
+	}
+}

@@ -1,0 +1,77 @@
+package tests;
+
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junit.framework.TestCase;
+
+public class Redirect extends TestCase {
+	private WebDriver driver;
+	private String baseUrl;
+	private StringBuffer verificationErrors = new StringBuffer();
+	private static final int WAIT_TIME = 3000;
+
+	@Before
+	public void setUp() throws Exception {
+		System.setProperty("webdriver.gecko.driver", "exe\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		baseUrl = "https://www.klick.ee/";
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+
+	@Test
+	public void testRedirect() throws Exception {
+		System.out.println("Running redirect tests...");
+		driver.get(baseUrl);
+		System.out.println("Opening " + baseUrl);
+		driver.findElement(By.partialLinkText("Arvutid")).click();
+		Thread.sleep(WAIT_TIME);
+		driver.findElement(By.partialLinkText("Sülearvutid")).click();
+		System.out.println("Redirecting to " + baseUrl + "arvutid/sulearvutid");
+		try {
+			System.out.println("Verifying that page title is Sülearvutid");
+			assertEquals("Sülearvutid", driver.findElement(By.xpath("//div[@class=\"category-title\"]/h1")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		driver.findElement(By.partialLinkText("Mobiiltelefonid")).click();
+		Thread.sleep(WAIT_TIME);
+		driver.findElement(By.partialLinkText("Nutitelefonid")).click();
+		Thread.sleep(WAIT_TIME);
+		System.out.println("Redirecting to " + baseUrl + "/mobiiltelefonid/nutitelefonid");
+		try {
+			System.out.println("Verifying that page title is Nutitelefonid");
+			assertEquals("Nutitelefonid",
+					driver.findElement(By.xpath("//div[@class=\"category-title\"]/h1")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		driver.findElement(By.partialLinkText("TV ja Heli")).click();
+		Thread.sleep(WAIT_TIME);
+		driver.findElement(By.partialLinkText("Telerid")).click();
+		Thread.sleep(WAIT_TIME);
+		System.out.println("Redirecting to " + baseUrl + "/tv-heli/telerid");
+		try {
+			System.out.println("Verifying that page title is Telerid");
+			assertEquals("Telerid", driver.findElement(By.xpath("//div[@class=\"category-title\"]/h1")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		driver.quit();
+		String verificationErrorString = verificationErrors.toString();
+		if (!"".equals(verificationErrorString)) {
+			fail(verificationErrorString);
+			System.out.println("Redirect tests failed");
+		} else {
+			System.out.println("Redirect tests passed!");
+		}
+	}
+}

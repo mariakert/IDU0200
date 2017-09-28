@@ -1,0 +1,98 @@
+package tests;
+
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junit.framework.TestCase;
+
+public class AddAndRemoveFromCart extends TestCase {
+	private WebDriver driver;
+	private String baseUrl;
+	private StringBuffer verificationErrors = new StringBuffer();
+
+	@Before
+	public void setUp() throws Exception {
+		System.setProperty("webdriver.gecko.driver",
+				"D:\\Users\\mammu\\workspace\\IDU0200\\maria.kert\\K4\\K4\\exe\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		baseUrl = "https://www.klick.ee";
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+
+	@Test
+	public void testAddAndRemoveFromCart() throws Exception {
+		System.out.println("Testing adding and removing from cart");
+		
+		driver.get(baseUrl + "/checkout/cart");
+		System.out.println("Redirecting to shopping cart");
+		try {
+			System.out.println("Verifying that cart is empty");
+			assertEquals("Ostukorvis pole tooteid.",
+					driver.findElement(By.cssSelector("div.cart-empty > p")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		
+		driver.get(baseUrl + "/arvutid/sulearvutid");
+		Thread.sleep(1000);
+		System.out.println("Navigating to https://www.klick.ee/arvutid/sulearvutid");
+		driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
+		System.out.println("Adding item to cart");
+		Thread.sleep(1000);
+		driver.findElement(By.id("atca-redirect-btn")).click();
+		System.out.println("Redirecting to cart");
+		Thread.sleep(1000);
+		
+		try {
+			System.out.println("Verifying that there is an item in the shopping cart");
+			assertTrue(isElementPresent(By.xpath("//table[@id='shopping-cart-table']/tbody/tr/td[5]/ul/li[2]/a/span")));
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		try {
+			System.out.println("Verifying that url is correct");
+			assertEquals("https://www.klick.ee/checkout/cart/", driver.getCurrentUrl());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		
+		driver.findElement(By.xpath("//div[11]/div/div/div[2]/div[3]/div")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//table[@id='shopping-cart-table']/tbody/tr/td[5]/ul/li[2]/a/span")).click();
+		Thread.sleep(1000);
+		System.out.println("Removing item from cart");
+		
+		try {
+			System.out.println("Verifying that cart is empty");
+			assertEquals("Ostukorvis pole tooteid.",
+					driver.findElement(By.cssSelector("div.cart-empty > p")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		driver.quit();
+		String verificationErrorString = verificationErrors.toString();
+		if (!"".equals(verificationErrorString)) {
+			fail(verificationErrorString);
+		} else {
+			System.out.println("Cart tests passed!");
+		}
+	}
+
+	private boolean isElementPresent(By by) {
+		try {
+			driver.findElement(by);
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+}

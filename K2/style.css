@@ -1,0 +1,28 @@
+@keyframes changeColour {
+    from {background-color: white;}
+    to {background-color: darkseagreen;}
+}
+
+body {
+    padding: 10px;
+}
+
+#select {
+    margin-top: 30px;
+    display: none;
+}
+
+#searchResults {
+    width: 200px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+p {
+    padding-left: 25px;
+}

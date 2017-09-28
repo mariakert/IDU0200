@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Häälduste andmebaas</title>
+    <script src="../static/js/jquery-3.2.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../static/js/ng-file-model.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container" ng-app="wordApp" ng-controller="tabController as tabs">
+        <div class="header">
+            <h3 class="text-muted">Häälduste andmebaas</h3>
+        </div>
+        <div class="navbar navbar-default">
+            <ul class="nav nav-pills navbar-nav">
+                <li ng-class="{active: tabs.isSet(1)}">
+                    <a href ng-click="tabs.setTab(1)">Otsi</a>
+                </li>
+                <li ng-class="{active: tabs.isSet(2)}">
+                    <a href ng-click="tabs.setTab(2)">Lisa</a>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-controller="wordController as words">
+            <div ng-show="tabs.isSet(1)" class="col-sm-offset-2 col-sm-8">
+                <div>
+                    <form>
+                        <p>Sõna:</p>
+                        <input type="text" ng-model="query" class="form-control">
+                    </form>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table id="results" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sõna</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="word in data | filter:query | orderBy:'word' track by $index">
+                                <th scope="row">{{'{{$index+1}}'}}</th>
+                                <td>{{'{{word.word}}'}}</td>
+                                <td><a href="" ng-click="play(word, $index)"><span id="playButton{{ '{{$index}}' }}" class="glyphicon glyphicon-play"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div ng-show="tabs.isSet(2)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <form>
+                        <p>Sõna:</p>
+                        <input type="text" ng-model="inputWord.word" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="getWord()">Salvesta hääldus</button>
+                    </form>
+                </div>
+                <!-- Recording Modal -->
+                <div id="recordModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Salvesta hääldus</h4>
+                            </div>
+                            <div class="modal-body" style="text-align: center">
+                                <p><a href="" ng-click="record()"><span id="recordButton" class="glyphicon glyphicon-play"></span></a></p>
+                            </div>
+                            <div class="modal-footer">
+                                <span id="saveButton" style="display: none;"><button type="button" class="btn btn-success" data-dismiss="modal" ng-click="chooseSavingMethod(); hideButton()">Salvesta</button></span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="hideButton()">Loobu</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                 <!-- Alert Modal -->
+                <div id="alertModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Hoiatus</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Hääldus juba eksisteerib andmebaasis. Salvestamisel kirjutate olemasoleva häälduse üle. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="$('#recordModal').modal()">Jätka</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Loobu</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--div ng-show="tabs.isSet(3)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <form>
+                        <p>Nimi:</p>
+                        <input type="text" ng-model="sighting.name" class="form-control">
+                        <br>
+                        <p>Asukoht:</p>
+                        <input type="text" ng-model="sighting.location" class="form-control">
+                        <br>
+                        <p>Kuupäev:</p>
+                        <input type="date" ng-model="sighting.sight_date" class="form-control">
+                        <br>
+                        <p>Kellaaeg:</p>
+                        <input type="time" ng-model="sighting.time" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="addSighting()">Salvesta</button>
+                    </form>
+                </div>
+            </div>
+            <div ng-show="tabs.isSet(4)">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <h1>{{ '{{animal.name}}' }}</h1>
+                    <form>
+                        <p>Liik:</p>
+                        <input type="text" ng-model="animal.species" class="form-control">
+                        <br>
+                        <p>Asukoht:</p>
+                        <input type="text" ng-model="sighting.location" class="form-control">
+                        <br>
+                        <p>Kuupäev:</p>
+                        <input type="date" ng-model="sighting.sight_date" class="form-control">
+                        <br>
+                        <p>Kellaaeg:</p>
+                        <input type="time" ng-model="sighting.time" class="form-control">
+                        <br>
+                        <button type="button" class="form-control btn btn-primary" ng-click="updateSighting(); tabs.setTab(1)">Salvesta</button>
+                    </form>
+                </div>
+            </div-->
+        </div>
+    </div>
+</body>
+</html>

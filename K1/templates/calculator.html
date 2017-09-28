@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Python Flask Calculator</title>
+
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">Python Flask Calculator</h3>
+        </div>
+
+        <div>
+            <div class="buttonRow">
+                <input id="textBox" class="form-control" id="disabledInput" type="text" disabled>
+            </div>
+            <div class="buttonRow">
+                <button class="btn" value="1" onclick="addToInput('1')">1</button>
+                <button class="btn" value="2" onclick="addToInput('2')">2</button>
+                <button class="btn" value="3" onclick="addToInput('3')">3</button>
+                <button class="btn" value="+" onclick="addToInput('+')">+</button>
+            </div>
+
+            <div class="buttonRow">
+                <button class="btn" value="4" onclick="addToInput('4')">4</button>
+                <button class="btn" value="5" onclick="addToInput('5')">5</button>
+                <button class="btn" value="6" onclick="addToInput('6')">6</button>
+                <button class="btn" value="-" onclick="addToInput('-')">-</button>
+            </div>
+
+            <div class="buttonRow">
+                <button class="btn" value="7" onclick="addToInput('7')">7</button>
+                <button class="btn" value="8" onclick="addToInput('8')">8</button>
+                <button class="btn" value="9" onclick="addToInput('9')">9</button>
+                <button class="btn" value="*" onclick="addToInput('*')">*</button>
+            </div>
+
+            <div class="buttonRow">
+                <button type="button" class="btn" value="C" onclick="clearInput()">C</button>
+                <button class="btn" value="0" onclick="addToInput('0')">0</button>
+                <button class="btn" value="=" onclick="calculate()">=</button>
+                <button class="btn" value="/" onclick="addToInput('/')">/</button>
+            </div>
+
+        </div>
+
+        <footer class="footer">
+            <p>&copy; Maria Kert 2017</p>
+        </footer>
+
+    </div>
+
+    <style>
+        .buttonRow {
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            width: 40px;
+        }
+
+        #textBox {
+            width: 171px;
+        }
+    </style>
+    <script src="../static/js/calculator.js"></script>
+</body>
+
+</html>

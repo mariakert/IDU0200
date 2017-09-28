@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;tests.AddAndRemoveFromCart&apos; to &apos;Cart&apos;&#x0D;&#x0A;- Original project: &apos;K4&apos;&#x0D;&#x0A;- Original element: &apos;tests.AddAndRemoveFromCart&apos;&#x0D;&#x0A;- Renamed element: &apos;tests.Cart&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;AddAndRemoveFromCart&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;tests{AddAndRemoveFromCart.java[AddAndRemoveFromCart" matchStrategy="1" name="Cart" qualified="false" references="true" similarDeclarations="false" stamp="1493723065953" textual="false" version="1.0"/>
+</session>

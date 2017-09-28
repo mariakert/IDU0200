@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.junit.runner.RunWith"/>
+<fullyQualifiedTypeName name="org.junit.runners.Suite"/>
+<fullyQualifiedTypeName name="org.junit.runners.Suite.SuiteClasses"/>
+<fullyQualifiedTypeName name="tests.Search"/>
+<fullyQualifiedTypeName name="tests.Sort"/>
+<fullyQualifiedTypeName name="tests.Filter"/>
+<fullyQualifiedTypeName name="tests.AddAndRemoveFromCart"/>
+<fullyQualifiedTypeName name="tests.Redirect"/>
+<fullyQualifiedTypeName name="junit.framework.TestCase"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="org.openqa.selenium.Keys"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="junit.textui.TestRunner"/>
+</qualifiedTypeNameHistroy>

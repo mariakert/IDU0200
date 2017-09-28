@@ -1,0 +1,19 @@
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+public class A {
+
+  public static Test suite() {
+    TestSuite suite = new TestSuite();
+    suite.addTestSuite(search.class);
+    suite.addTestSuite(sort.class);
+    suite.addTestSuite(filter.class);
+    suite.addTestSuite(addAndRemoveFromCart.class);
+    suite.addTestSuite(redirect.class);
+    return suite;
+  }
+
+  public static void main(String[] args) {
+    junit.textui.TestRunner.run(suite());
+  }
+}

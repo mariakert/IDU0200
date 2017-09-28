@@ -1,0 +1,24 @@
+package tests;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+public class Main {
+	
+	private static final String PATH = "D:\\Users\\mammu\\workspace\\IDU0200\\maria.kert\\K4\\K4\\exe\\geckodriver.exe";
+
+	public static Test suite() {
+		TestSuite suite = new TestSuite();
+		suite.addTestSuite(Search.class);
+		suite.addTestSuite(Sort.class);
+		suite.addTestSuite(Filter.class);
+		suite.addTestSuite(AddAndRemoveFromCart.class);
+		suite.addTestSuite(Redirect.class);
+		return suite;
+	}
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.gecko.driver", PATH);
+		junit.textui.TestRunner.run(suite());
+	}
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>TV Show Search</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="animate.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            
+            <div class="header">
+                <h3 class="text-muted">TV Show Search</h3>
+            </div>
+            
+            <div id="searchDiv" class="animated">
+                <form class="form-inline">
+                    <input type="text" placeholder="Search" id="searchBox" class="form-control input-md" required="true">
+                    <input type="button" id="searchButton" value="Search" class="btn btn-primary">
+                </form>
+            </div>
+            
+            <div id="select" class="animated">
+                <div id="colourDiv" class="form-inline">
+                    <label for="searchResults">Results</label>
+                    <br>
+                    <select id="searchResults" class="form-control">
+                    </select>
+                </div>
+            </div>
+            
+            <footer class="footer">
+                <p>&copy; Maria Kert 2017</p>
+            </footer>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>

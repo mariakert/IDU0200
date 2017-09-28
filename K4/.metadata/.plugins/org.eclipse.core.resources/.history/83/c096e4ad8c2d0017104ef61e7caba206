@@ -1,0 +1,33 @@
+package tests;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+@RunWith(Suite.class)
+@SuiteClasses({
+	Search.class,
+	Sort.class,
+	Filter.class,
+	AddAndRemoveFromCart.class,
+	Redirect.class
+})
+public class Main {
+
+  public static Test suite() {
+    TestSuite suite = new TestSuite();
+    suite.addTestSuite(Search.class);
+    suite.addTestSuite(Sort.class);
+    suite.addTestSuite(Filter.class);
+    suite.addTestSuite(AddAndRemoveFromCart.class);
+    suite.addTestSuite(Redirect.class);
+    return suite;
+  }
+
+  public static void main(String[] args) {
+    junit.textui.TestRunner.run(suite());
+  }
+}

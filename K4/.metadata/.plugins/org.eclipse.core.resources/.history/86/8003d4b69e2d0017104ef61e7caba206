@@ -1,0 +1,74 @@
+package tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import static org.junit.Assert.*;
+//import static org.hamcrest.CoreMatchers.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junit.framework.TestCase;
+//import org.openqa.selenium.support.ui.Select;
+
+public class Sort extends TestCase {
+	private WebDriver driver;
+	private String baseUrl;
+	private boolean acceptNextAlert = true;
+	private StringBuffer verificationErrors = new StringBuffer();
+
+	@Before
+	public void setUp() throws Exception {
+		System.setProperty("webdriver.gecko.driver",
+				"D:\\Users\\mammu\\workspace\\IDU0200\\maria.kert\\K4\\K4\\exe\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		baseUrl = "https://www.klick.ee/";
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+
+	@Test
+	public void testSort() throws Exception {
+		driver.get(baseUrl + "arvutid/sulearvutid");
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span")).click();
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span/span[2]/span/span[3]")).click();
+		Thread.sleep(2000);
+		try {
+			assertTrue(Pattern.compile("([A]{0,1}.)")
+					.matcher(driver.findElement(By.xpath("//div[@id='products-grid']/div[1]/div/h5/a")).getText())
+					.find());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span")).click();
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span/span[2]/span/span[5]")).click();
+		Thread.sleep(2000);
+		String firstItem = driver.findElement(By.xpath("//div[@id='products-grid']/div[1]/div/div[1]/span/span"))
+				.getText();
+		String secondItem = driver.findElement(By.xpath("//div[@id='products-grid']/div[2]/div/div[1]/span/span"))
+				.getText();
+		int firstItemPrice = Integer.parseInt(firstItem.split("\\.")[0]);
+		int secondItemPrice = Integer.parseInt(secondItem.split("\\.")[0]);
+		System.out.println(firstItem + " + \" \" + " + firstItemPrice);
+		assertTrue(firstItemPrice >= secondItemPrice);
+
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span")).click();
+		driver.findElement(By.xpath("//div[@id='left-toolbar']/div[2]/span/span[2]/span/span[4]")).click();
+		Thread.sleep(2000);
+		firstItem = driver.findElement(By.xpath("//div[@id='products-grid']/div[1]/div/div[1]/span/span")).getText();
+		secondItem = driver.findElement(By.xpath("//div[@id='products-grid']/div[2]/div/div[1]/span/span")).getText();
+		firstItemPrice = Integer.parseInt(firstItem.split("\\.")[0]);
+		secondItemPrice = Integer.parseInt(secondItem.split("\\.")[0]);
+		System.out.println(firstItem + " + \" \" + " + firstItemPrice);
+		assertTrue(firstItemPrice <= secondItemPrice);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		driver.quit();
+		String verificationErrorString = verificationErrors.toString();
+		if (!"".equals(verificationErrorString)) {
+			fail(verificationErrorString);
+		}
+	}
+}
